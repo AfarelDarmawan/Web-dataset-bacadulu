@@ -1,0 +1,473 @@
+/* Login admin BacaDulu Dataset. Dimuat sesudah bacadulu-dataset.css. */
+.admin-auth-shell {
+    --admin-navy: #090b3d;
+    --admin-gold: #f8c864;
+    --admin-coral: #dc5949;
+    --admin-paper: #f3f6fa;
+    min-height: 100dvh;
+    color: var(--admin-navy);
+    background: var(--admin-paper);
+}
+
+.admin-auth-shell .admin-auth-frame {
+    display: grid;
+    width: min(1120px, calc(100% - 48px));
+    min-height: min(690px, calc(100dvh - 72px));
+    grid-template-columns: minmax(0, 1.05fr) minmax(400px, .95fr);
+    margin: 36px auto;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid #d9dfeb;
+    border-radius: 14px;
+    box-shadow: 0 28px 70px rgba(9, 11, 61, .075);
+}
+
+.admin-auth-shell .admin-auth-context {
+    display: flex;
+    min-width: 0;
+    min-height: 0;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 40px;
+    padding: clamp(30px, 4vw, 52px);
+    color: #fff;
+    background: var(--admin-navy);
+}
+
+.admin-auth-shell .admin-auth-context > div {
+    max-width: none;
+}
+
+.admin-auth-context__top,
+.admin-auth-context__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.admin-auth-shell .admin-auth-context .brand__logo-window {
+    border: 0;
+    background: transparent;
+}
+
+.admin-auth-shell .admin-auth-context .brand__product {
+    color: #fff;
+    border-color: rgba(255, 255, 255, .26);
+}
+
+.admin-auth-context__label,
+.admin-auth-kicker,
+.admin-auth-panel__top,
+.admin-login-heading__eyebrow {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .11em;
+    text-transform: uppercase;
+}
+
+.admin-auth-context__label {
+    color: #d6dbf1;
+    white-space: nowrap;
+}
+
+.admin-auth-kicker {
+    color: var(--admin-gold);
+}
+
+.admin-auth-shell .admin-auth-context h1 {
+    max-width: 500px;
+    margin: 16px 0 17px;
+    color: #fff;
+    font-family: var(--sans);
+    font-size: clamp(36px, 4vw, 54px);
+    font-weight: 780;
+    line-height: 1.08;
+    letter-spacing: -.052em;
+}
+
+.admin-auth-shell .admin-auth-context__body > p {
+    max-width: 430px;
+    margin: 0;
+    color: #ced3ed;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.admin-auth-shell .admin-auth-steps {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    max-width: 470px;
+    margin: 30px 0 0;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    list-style: none;
+}
+
+.admin-auth-shell .admin-auth-steps li {
+    display: flex;
+    min-height: 0;
+    align-items: center;
+    gap: 20px;
+    padding: 12px 0;
+    color: #fff;
+    background: transparent;
+    border-top: 1px solid rgba(255, 255, 255, .18);
+    font-size: 13px;
+}
+
+.admin-auth-shell .admin-auth-steps li span {
+    color: var(--admin-gold);
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.admin-auth-shell .admin-auth-steps li strong {
+    font-weight: 590;
+}
+
+.admin-auth-context__bottom {
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, .18);
+    color: #cbd0e8;
+    font-size: 11px;
+}
+
+.admin-auth-bars {
+    display: flex;
+    height: 28px;
+    align-items: end;
+    gap: 4px;
+}
+
+.admin-auth-bars i {
+    display: block;
+    width: 8px;
+    border-radius: 2px 2px 0 0;
+}
+
+.admin-auth-bars i:nth-child(1) {
+    height: 17px;
+    background: var(--admin-gold);
+}
+
+.admin-auth-bars i:nth-child(2) {
+    height: 28px;
+    background: var(--admin-coral);
+}
+
+.admin-auth-bars i:nth-child(3) {
+    height: 21px;
+    background: #a7ace0;
+}
+
+.admin-auth-shell .admin-auth-panel {
+    display: grid;
+    min-width: 0;
+    min-height: 0;
+    align-items: center;
+    justify-items: stretch;
+    padding: clamp(28px, 5vw, 70px);
+    background: #fff;
+    border: 0;
+}
+
+.admin-auth-shell .admin-auth-panel__inner {
+    width: min(100%, 410px);
+    margin-inline: auto;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.admin-auth-panel__top {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 54px;
+    color: #444b72;
+}
+
+.admin-auth-panel__index {
+    color: #8b91a9;
+    font-variant-numeric: tabular-nums;
+}
+
+.admin-login-heading__eyebrow {
+    color: #bd493a;
+}
+
+.admin-login-heading h2 {
+    margin: 9px 0 10px;
+    color: var(--admin-navy);
+    font-size: clamp(29px, 3vw, 38px);
+    line-height: 1.14;
+    letter-spacing: -.044em;
+}
+
+.admin-login-heading p {
+    max-width: 360px;
+    margin: 0;
+    color: #626b81;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.admin-login-form {
+    display: grid;
+    gap: 18px;
+    margin-top: 34px;
+}
+
+.admin-login-field {
+    display: grid;
+    min-width: 0;
+    gap: 8px;
+}
+
+.admin-login-field label {
+    color: #252b4f;
+    font-size: 13px;
+    font-weight: 740;
+}
+
+.admin-login-field input {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    height: 48px;
+    padding: 10px 14px;
+    color: var(--admin-navy);
+    background: #fff;
+    border: 1px solid #bdc6d8;
+    border-radius: 7px;
+    font-size: 16px;
+    outline: 0;
+    transition: border-color .18s ease, box-shadow .18s ease;
+}
+
+.admin-login-field input:focus {
+    border-color: #353c88;
+    box-shadow: 0 0 0 3px rgba(53, 60, 136, .13);
+}
+
+.admin-login-field input[aria-invalid="true"] {
+    border-color: #b84336;
+}
+
+.admin-login-password {
+    position: relative;
+}
+
+.admin-login-password input {
+    padding-right: 100px;
+}
+
+.admin-login-password button {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    bottom: 4px;
+    min-width: 76px;
+    padding: 0 9px;
+    color: #30376c;
+    background: #f2f4f9;
+    border: 0;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 750;
+}
+
+.admin-login-password button:hover {
+    background: #e7ebf5;
+}
+
+.admin-login-submit {
+    display: flex;
+    width: 100%;
+    min-height: 50px;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 4px;
+    padding: 12px 16px;
+    color: #fff;
+    background: var(--admin-navy);
+    border: 1px solid var(--admin-navy);
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: 780;
+    transition: background-color .2s ease, transform .2s ease;
+}
+
+.admin-login-submit:hover {
+    background: #202466;
+    transform: translateY(-2px);
+}
+
+.admin-login-submit:disabled {
+    opacity: .7;
+    cursor: wait;
+    transform: none;
+}
+
+.admin-login-submit span:last-child {
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1;
+}
+
+.admin-login-help {
+    margin: 15px 0 0;
+    color: #71798e;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.admin-auth-panel__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px 18px;
+    margin-top: 46px;
+    padding-top: 18px;
+    border-top: 1px solid #e1e5ee;
+    color: #707990;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.admin-auth-panel__foot span:first-child {
+    max-width: 220px;
+}
+
+.admin-auth-panel__foot a {
+    color: #222958;
+    font-weight: 750;
+    white-space: nowrap;
+}
+
+.admin-auth-panel__foot a:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.admin-auth-panel__foot a span {
+    font-size: 15px;
+}
+
+.admin-auth-shell .admin-auth-panel .alert {
+    margin-bottom: 22px;
+    border-radius: 6px;
+}
+
+.admin-auth-shell :focus-visible {
+    outline: 3px solid var(--admin-gold);
+    outline-offset: 3px;
+}
+
+@media (max-width: 850px) {
+    .admin-auth-shell .admin-auth-frame {
+        width: min(550px, calc(100% - 28px));
+        min-height: 0;
+        grid-template-columns: minmax(0, 1fr);
+        margin: 14px auto 28px;
+    }
+
+    .admin-auth-shell .admin-auth-context {
+        display: flex;
+        gap: 18px;
+        padding: 22px 26px 24px;
+    }
+
+    .admin-auth-context__label,
+    .admin-auth-steps,
+    .admin-auth-context__bottom {
+        display: none !important;
+    }
+
+    .admin-auth-shell .admin-auth-context h1 {
+        margin: 8px 0 7px;
+        font-size: 29px;
+    }
+
+    .admin-auth-shell .admin-auth-context__body > p {
+        font-size: 12px;
+        line-height: 1.5;
+    }
+
+    .admin-auth-shell .admin-auth-panel {
+        min-height: 0;
+        padding: 28px 26px 34px;
+    }
+
+    .admin-auth-panel__top {
+        margin-bottom: 30px;
+    }
+
+    .admin-auth-panel__foot {
+        margin-top: 33px;
+    }
+}
+
+@media (max-width: 390px) {
+    .admin-auth-shell .admin-auth-frame {
+        width: calc(100% - 16px);
+        margin-top: 8px;
+    }
+
+    .admin-auth-shell .admin-auth-context {
+        padding-inline: 18px;
+    }
+
+    .admin-auth-shell .admin-auth-panel {
+        padding-inline: 18px;
+    }
+
+    .admin-auth-shell .admin-auth-context h1 {
+        font-size: 26px;
+    }
+
+    .admin-login-heading h2 {
+        font-size: 29px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .admin-auth-shell *,
+    .admin-auth-shell *::before,
+    .admin-auth-shell *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+    }
+}
+
+
+.admin-login-remember {
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    gap: 10px;
+    color: #3d4668;
+    font-size: 13px;
+    line-height: 1.5;
+    cursor: pointer;
+}
+
+.admin-login-remember input {
+    width: 17px;
+    height: 17px;
+    flex: 0 0 auto;
+    margin: 0;
+    accent-color: var(--admin-navy);
+    cursor: pointer;
+}
+
+.admin-login-remember span {
+    font-weight: 600;
+}

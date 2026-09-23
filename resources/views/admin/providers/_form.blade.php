@@ -1,0 +1,9 @@
+<div class="form-grid form-grid--2">
+    <div class="field field--span-2"><label for="name">Nama provider</label><input id="name" name="name" value="{{ old('name', $provider->name ?? '') }}" required placeholder="Nama resmi lembaga atau organisasi"></div>
+    <div class="field"><label for="type">Tipe provider</label><select id="type" name="type" required>@foreach(['government'=>'Pemerintah','university'=>'Universitas','company'=>'Perusahaan','ngo'=>'NGO','institution'=>'Institusi','other'=>'Lainnya'] as $value=>$label)<option value="{{ $value }}" @selected(old('type', $provider->type ?? 'institution') === $value)>{{ $label }}</option>@endforeach</select></div>
+    <div class="field"><label for="status">Status</label><select id="status" name="status" required><option value="active" @selected(old('status', $provider->status ?? 'active') === 'active')>Aktif</option><option value="inactive" @selected(old('status', $provider->status ?? '') === 'inactive')>Nonaktif</option></select></div>
+    <div class="field field--span-2"><label for="description">Deskripsi</label><textarea id="description" name="description" rows="5" placeholder="Mandat, ruang lingkup, atau peran provider dalam penyediaan data.">{{ old('description', $provider->description ?? '') }}</textarea></div>
+    <div class="field field--span-2"><label for="website">Website resmi</label><input id="website" name="website" type="url" value="{{ old('website', $provider->website ?? '') }}" placeholder="https://"></div>
+    <div class="field"><label for="contact_name">Nama kontak</label><input id="contact_name" name="contact_name" value="{{ old('contact_name', $provider->contact_name ?? '') }}"></div>
+    <div class="field"><label for="contact_email">Email kontak</label><input id="contact_email" name="contact_email" type="email" value="{{ old('contact_email', $provider->contact_email ?? '') }}"></div>
+</div>

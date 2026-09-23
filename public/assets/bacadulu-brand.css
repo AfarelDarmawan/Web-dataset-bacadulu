@@ -1,0 +1,79 @@
+/* Let the transparent logo blend into the public navbar without a white tile. */
+.public-shell .site-header .brand__logo-window {
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+}
+
+/* Frame the visible pixels against the dark footer separately. */
+.bd-footer-company .bd-footer-company__logo {
+    position: relative;
+    display: block;
+    flex: 0 0 78px;
+    width: 78px;
+    height: 50px;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 7px;
+}
+.bd-footer-company .bd-footer-company__logo img {
+    position: absolute;
+    top: -28px;
+    left: -14px;
+    display: block;
+    width: 106px;
+    height: 106px;
+    max-width: none;
+    object-fit: fill;
+    background: transparent;
+    border-radius: 0;
+}
+
+/* Public colour system. Admin pages retain their own palette. */
+body.public-shell {
+    --ink: #20233d;
+    --ink-soft: #3d4052;
+    --forest: #352864;
+    --forest-deep: #241b52;
+    --cream: #faf9f6;
+    --paper: #fff;
+    --line: #e8e5e6;
+    --line-dark: #cfcbd3;
+    --muted: #606477;
+    --accent: #ffc145;
+    --accent-strong: #e3a82e;
+    --accent-soft: #fff6e2;
+    --coral: #e85d4d;
+    color: var(--ink);
+    background: #fff;
+}
+.public-shell .site-header { background: rgba(255, 255, 255, .98); border-bottom-color: #e8e5e6; }
+.public-shell .site-nav a { color: #35334a; }
+.public-shell .site-nav a:hover, .public-shell .site-nav a.is-active { color: #241b52; }
+.public-shell .site-nav a::after { background: #ffc145; }
+.public-shell .site-header .brand__product { color: #241b52; border-left-color: #d8d5db; }
+.public-shell .site-header__actions .text-link { color: #241b52; }
+.public-shell .site-header__actions .button--ink {
+    color: #fff;
+    background: #c24638;
+    border-color: #c24638;
+    box-shadow: none;
+}
+.public-shell .site-header__actions .button--ink:hover { background: #a83a31; border-color: #a83a31; box-shadow: none; }
+.public-shell .catalog-hero { background: #faf9f6; }
+.public-shell .catalog-hero h1 { color: #241b52; font-size: clamp(32px, 3.2vw, 44px); }
+.public-shell .scope-switch { border-color: #e8e5e6; }
+.public-shell .scope-switch__item { border-right-color: #e8e5e6; }
+.public-shell .scope-switch__item.is-active { color: #fff; background: #241b52; box-shadow: inset 0 -4px 0 #ffc145; }
+.public-shell .scope-switch__item:hover:not(.is-active) { background: #fff6e2; }
+.public-shell .catalog-filter { border-color: #e8e5e6; box-shadow: 0 9px 25px rgba(36,27,82,.05); }
+.public-shell .catalog-filter .button--ink, .public-shell .catalog-filter-toggle { background: #241b52; border-color: #241b52; }
+.public-shell .variable-row { border-bottom-color: #e8e5e6; }
+.public-shell .variable-row:hover { background: #fffaf2; }
+.public-shell .variable-row::before { background: #df5244; }
+.public-shell .variable-row h2 { color: #241b52; font-size: clamp(18px, 1.6vw, 22px); }
+.public-shell .variable-row__eyeline code { color: #493479; background: #f3f0f7; border-color: #e2dce9; }
+.public-shell .variable-detail-hero { background: #241b52; }
+.public-shell .variable-detail-hero h1 { font-size: clamp(34px, 3.8vw, 52px); }
+.public-shell .bd-footer { background: #171526; }
+.public-shell .bd-footer-decoration { background: none; }

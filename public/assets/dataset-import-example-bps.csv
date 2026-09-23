@@ -1,0 +1,3 @@
+variable_code,geography_code,geography_name,period,value,source_reference,quality_status
+JUMLAH_PENDUDUK,ID-JB,Jawa Barat,2024,0,GANTI_DENGAN_URL_ATAU_TABEL_BPS,unreviewed
+JUMLAH_PENDUDUK,ID-JT,Jawa Tengah,2024,0,GANTI_DENGAN_URL_ATAU_TABEL_BPS,unreviewed

@@ -1,0 +1,692 @@
+/* Panel admin BacaDulu Dataset. Hanya dimuat di layouts.admin. */
+.app-shell--admin { grid-template-columns: 246px minmax(0, 1fr); background: #f1f4f8; }
+.app-shell--admin .app-sidebar--admin { gap: 0; padding: 22px 14px 18px; overflow-y: auto; background: #090b3d; }
+.app-shell--admin .app-sidebar__head { padding: 0 8px; }
+.app-shell--admin .app-sidebar__head .brand__logo-window { width: 96px; height: 55px; flex-basis: 96px; border: 0; background: transparent; }
+.app-shell--admin .app-sidebar__head .brand__logo { top: -38px; left: -18px; width: 132px; height: 132px; }
+.app-shell--admin .app-sidebar__head .brand__product { padding-left: 8px; font-size: 9px; }
+.app-shell--admin .app-nav--admin { display: grid; gap: 3px; margin-top: 28px; }
+.app-shell--admin .app-nav--admin .app-nav__label { margin: 0 12px 10px; color: #a6afd1; font-size: 10px; }
+.app-shell--admin .app-nav--admin > a { min-height: 43px; padding: 8px 12px; border: 0; border-radius: 7px; color: #e1e6f3; font-size: 13px; font-weight: 680; }
+.app-shell--admin .app-nav--admin > a span { display: inline-grid; width: 24px; height: 24px; flex: 0 0 24px; place-items: center; color: #f8c864; border: 0; font-size: 10px; }
+.app-shell--admin .app-nav--admin a.is-active { color: #090b3d; background: #f8c864; }
+.app-shell--admin .app-nav--admin a.is-active span { color: #090b3d; }
+.app-shell--admin .app-nav--admin a:hover:not(.is-active) { color: #fff; background: rgba(255,255,255,.1); }
+.admin-nav-group { margin-top: 8px; border-top: 1px solid rgba(255,255,255,.16); }
+.admin-nav-group summary { display: flex; align-items: center; justify-content: space-between; min-height: 42px; padding: 9px 12px; color: #c6cce2; font-size: 12px; font-weight: 720; cursor: pointer; list-style: none; }
+.admin-nav-group summary::-webkit-details-marker { display: none; }
+.admin-nav-group summary::after { content: '+'; color: #f8c864; font-size: 18px; font-weight: 400; }
+.admin-nav-group[open] summary::after { content: '−'; }
+.admin-nav-group > div { display: grid; gap: 2px; padding: 0 0 6px 8px; }
+.app-shell--admin .admin-nav-group a { padding: 8px 12px; color: #d7deef; border: 0; border-radius: 6px; font-size: 12px; }
+.app-shell--admin .admin-nav-group a.is-active { color: #090b3d; }
+.app-shell--admin .app-sidebar__foot { padding: 16px 12px 0; }
+.app-shell--admin .app-main { min-height: 100vh; background: #f2f5f9; }
+.app-shell--admin .app-topbar { min-height: 70px; padding-inline: clamp(18px, 3vw, 36px); }
+.admin-breadcrumb { display: flex; min-width: 0; align-items: center; gap: 8px; color: #788199; font-size: 12px; }
+.admin-breadcrumb a { flex: 0 0 auto; color: #35446f; font-weight: 700; }
+.admin-breadcrumb a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.admin-breadcrumb strong { overflow: hidden; color: #090b3d; font-size: 14px; font-weight: 760; text-overflow: ellipsis; white-space: nowrap; }
+.app-shell--admin .app-content { width: min(1220px, 100%); padding: 26px clamp(18px,3vw,36px) 90px; }
+.has-dataset-context .backline { display: none; }
+
+/* Context stays visible when moving between pages of the same collection. */
+.admin-collection-context { position: sticky; top: 70px; z-index: 24; margin: 0 0 24px; background: #fff; border: 1px solid #dce2ec; border-radius: 9px; box-shadow: 0 6px 20px rgba(9,11,61,.055); }
+.admin-collection-context__head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 18px 9px; }
+.admin-collection-context__head > div { display: flex; min-width: 0; flex-wrap: wrap; align-items: baseline; gap: 5px 12px; }
+.admin-collection-context__head span { color: #69728a; font-size: 11px; }
+.admin-collection-context__head strong { overflow: hidden; color: #090b3d; font-size: 14px; text-overflow: ellipsis; white-space: nowrap; }
+.admin-collection-context__head small { color: #69728a; font-size: 11px; }
+.admin-collection-context__head > a { flex: 0 0 auto; color: #24356e; font-size: 11px; font-weight: 780; text-decoration: underline; text-underline-offset: 3px; }
+.admin-collection-steps { display: flex; gap: 2px; padding: 0 8px; overflow-x: auto; scrollbar-width: thin; border-top: 1px solid #edf0f4; }
+.admin-collection-steps a { display: flex; min-width: max-content; align-items: center; gap: 8px; min-height: 42px; padding: 8px 11px; color: #536078; border-bottom: 3px solid transparent; font-size: 11px; font-weight: 760; }
+.admin-collection-steps a span { color: #bd523f; font-size: 10px; }
+.admin-collection-steps a:hover, .admin-collection-steps a.is-current { color: #090b3d; background: #faf7ed; border-bottom-color: #f8c864; }
+.admin-collection-steps a:focus-visible, .app-nav--admin a:focus-visible { outline: 3px solid #f8c864; outline-offset: -3px; }
+#metadata, #publication { scroll-margin-top: 200px; }
+
+/* Home: one priority, one queue, one place to resume. */
+.admin-home-intro { margin-bottom: 24px; }
+.admin-home-intro h1 { max-width: 850px; margin: 8px 0; color: #090b3d; font-size: clamp(28px, 3.2vw, 42px); line-height: 1.12; letter-spacing: -.045em; }
+.admin-home-intro p { max-width: 640px; margin: 0; color: #53617b; font-size: 14px; line-height: 1.6; }
+.admin-home-priority { display: flex; align-items: end; justify-content: space-between; gap: 26px; padding: clamp(24px,3vw,36px); color: #fff; background: #090b3d; border-radius: 9px; }
+.admin-home-priority > div { max-width: 690px; }
+.admin-home-priority > div > span { color: #f8c864; font-size: 11px; font-weight: 850; letter-spacing: .11em; text-transform: uppercase; }
+.admin-home-priority h2 { margin: 12px 0 8px; color: #fff; font-size: clamp(22px,2.5vw,31px); line-height: 1.18; }
+.admin-home-priority p { margin: 0; color: #d5d9ee; font-size: 13px; }
+.admin-home-priority .button { flex: 0 0 auto; }
+.admin-home-queues { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; margin: 18px 0 26px; }
+.admin-home-queues a { display: grid; gap: 9px; min-width: 0; padding: 19px; background: #fff; border: 1px solid #dce2ec; border-radius: 8px; }
+.admin-home-queues a:hover { border-color: #9aa8c4; }
+.admin-home-queues span { color: #56627a; font-size: 12px; }
+.admin-home-queues strong { color: #090b3d; font-size: 28px; line-height: 1; }
+.admin-home-queues small { color: #354681; font-size: 11px; font-weight: 750; }
+.admin-home-main { display: grid; grid-template-columns: minmax(0,1.6fr) minmax(250px,.65fr); align-items: start; gap: 16px; }
+.admin-home-recent a { display: flex; align-items: center; gap: 12px; padding: 13px 18px; border-top: 1px solid #e3e7ef; }
+.admin-home-recent a:hover { background: #f7f9fc; }
+.admin-home-recent a > div { display: grid; flex: 1; min-width: 0; }
+.admin-home-recent strong { overflow: hidden; color: #090b3d; font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }
+.admin-home-recent small { color: #647087; font-size: 11px; }
+.admin-home-guide h2 { margin: 8px 0 16px; font-size: 21px; }
+.admin-home-guide ol { margin: 0; padding-left: 22px; color: #27365c; line-height: 2; font-size: 13px; }
+.admin-home-guide p { margin: 18px 0 0; color: #58647c; font-size: 12px; }
+
+/* Collection registry and the precise next action. */
+.admin-page-head h1 { max-width: 700px; font-size: clamp(28px, 3vw, 40px); }
+.admin-support-links { display: flex; flex-wrap: wrap; gap: 10px; margin: -4px 0 20px; }
+.admin-support-links a { padding: 8px 12px; color: #2b3b71; background: #fff; border: 1px solid #dce2ec; border-radius: 5px; font-size: 11px; font-weight: 780; }
+.admin-collection-filter { grid-template-columns: minmax(190px,2fr) repeat(2,minmax(140px,1fr)) auto auto; }
+.admin-collection-item { display: flex; align-items: center; gap: 20px; padding: 17px 22px; border-top: 1px solid #e3e7ef; }
+.admin-collection-item:hover { background: #f7f9fd; }
+.admin-collection-item__main { display: grid; min-width: 0; flex: 1; gap: 3px; }
+.admin-collection-item__code { color: #a34a39; font-size: 10px; font-weight: 800; text-transform: uppercase; }
+.admin-collection-item__main strong { color: #090b3d; font-size: 16px; line-height: 1.3; }
+.admin-collection-item__main small, .admin-collection-item__state small { color: #66738b; font-size: 11px; }
+.admin-collection-item__state { display: grid; min-width: 160px; justify-items: start; gap: 7px; }
+.admin-collection-item__arrow { color: #304183; font-size: 21px; }
+.admin-next-action { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin: 20px 0; padding: 22px 24px; background: #fff8e9; border: 1px solid #edd8a0; border-radius: 8px; }
+.admin-next-action__label { color: #845711; font-size: 11px; font-weight: 850; text-transform: uppercase; }
+.admin-next-action h2 { margin: 5px 0; color: #090b3d; font-size: 22px; line-height: 1.2; }
+.admin-next-action p { margin: 0; color: #605b55; font-size: 12px; }
+.admin-next-action > a { flex: 0 0 auto; }
+.admin-section-heading { margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #e2e7f0; }
+.admin-section-heading span { color: #a34a39; font-size: 10px; font-weight: 850; }
+.admin-section-heading h2 { margin: 4px 0; font-size: 23px; }
+.admin-section-heading p, .admin-readiness-note { margin: 0; color: #657188; font-size: 12px; }
+.admin-danger-details { padding: 18px; }
+.admin-danger-details summary { color: #9a3025; font-size: 12px; font-weight: 800; cursor: pointer; }
+.admin-danger-details p { color: #59647a; font-size: 12px; }
+.admin-danger-details button { padding: 8px 10px; color: #a1392e; background: #fff; border: 1px solid #d49d95; }
+.admin-filter-context { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; margin: 0 0 16px; padding: 10px 14px; color: #263a66; background: #e9edf9; border-radius: 6px; font-size: 12px; }
+.admin-filter-context a { font-weight: 800; text-decoration: underline; text-underline-offset: 3px; }
+.admin-input-options { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-bottom: 20px; padding: 8px; background: #fff; border: 1px solid #dce2ec; border-radius: 7px; }
+.admin-input-options > span { padding: 8px 10px; color: #627088; font-size: 11px; font-weight: 740; }
+.admin-input-options a { padding: 9px 11px; color: #31416c; border-radius: 5px; font-size: 12px; font-weight: 750; }
+.admin-input-options a:hover, .admin-input-options a.is-current { color: #090b3d; background: #fff1cb; }
+.admin-stage-next { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 18px; padding: 16px 20px; background: #fff; border: 1px solid #dce2ec; border-radius: 7px; }
+.admin-stage-next > div { display: grid; gap: 2px; }
+.admin-stage-next strong { color: #090b3d; font-size: 14px; }
+.admin-stage-next span { color: #5b6780; font-size: 12px; }
+.admin-stage-next .button { flex: 0 0 auto; }
+
+@media (max-width: 1120px) {
+    .admin-home-main { grid-template-columns: 1fr; }
+    .admin-collection-filter { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    .admin-collection-filter .field--search { grid-column: span 2; }
+}
+@media (max-width: 900px) {
+    .app-shell--admin { grid-template-columns: minmax(0,1fr); }
+    .app-shell--admin .app-sidebar--admin { position: fixed; width: min(290px, 85vw); height: 100dvh; z-index: 70; }
+    .admin-collection-context { position: static; }
+}
+@media (max-width: 680px) {
+    .app-shell--admin .app-topbar { min-height: 64px; }
+    .app-shell--admin .app-topbar > .button { display: none; }
+    .app-shell--admin .app-content { padding: 17px 15px 60px; }
+    .admin-collection-context__head { align-items: start; padding: 11px 13px; }
+    .admin-collection-context__head > div { display: grid; gap: 2px; }
+    .admin-collection-context__head strong { max-width: 220px; }
+    .admin-collection-steps { padding: 0 5px; }
+    .admin-home-priority, .admin-next-action, .admin-stage-next { flex-direction: column; align-items: stretch; }
+    .admin-home-queues { grid-template-columns: 1fr; gap: 8px; }
+    .admin-home-queues a { grid-template-columns: 1fr auto; gap: 3px; }
+    .admin-home-queues small { grid-column: 1 / -1; }
+    .admin-collection-filter { grid-template-columns: 1fr; }
+    .admin-collection-filter .field--search { grid-column: auto; }
+    .admin-collection-item { align-items: start; padding: 16px; }
+    .admin-collection-item__state { min-width: 0; }
+    .admin-collection-item__arrow { display: none; }
+}
+@media (max-width: 430px) {
+    .admin-collection-item { flex-direction: column; gap: 10px; }
+    .admin-collection-item__state { display: flex; flex-wrap: wrap; align-items: center; }
+    .admin-breadcrumb { gap: 5px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .app-shell--admin *, .app-shell--admin *::before, .app-shell--admin *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
+
+/* BacaDulu admin sidebar: quiet navigation with the existing brand palette. */
+.admin-icon-sprite { position: absolute; width: 0; height: 0; overflow: hidden; pointer-events: none; }
+.app-shell--admin { grid-template-columns: 264px minmax(0, 1fr); transition: grid-template-columns .3s cubic-bezier(.22,1,.36,1); }
+.app-shell--admin .app-sidebar--admin {
+    position: sticky; top: 0; gap: 0; height: 100dvh; min-width: 0;
+    padding: 18px 13px 14px; color: #0b1042; background: #fff;
+    border-right: 1px solid #dfe6ef; box-shadow: 5px 0 24px rgba(9,11,61,.035);
+    overflow-x: hidden; overflow-y: auto; scrollbar-width: thin;
+}
+.app-shell--admin .app-sidebar__head { min-height: 56px; padding: 0 9px 12px; border-bottom: 1px solid #e7eaf0; }
+.app-shell--admin .app-sidebar__head .brand { min-width: 0; }
+.app-shell--admin .app-sidebar__head .brand__logo-window { width: 132px; height: 72px; flex: 0 0 132px; border: 0; background: transparent; }
+.app-shell--admin .app-sidebar__head .brand__logo { width: 160px; height: 160px; max-width: none; top: -46px; left: -19px; }
+.app-shell--admin .app-sidebar__head .brand__product { color: #0b1042; border-left-color: #dce2ed; font-size: 9px; }
+.admin-sidebar-account { display: flex; align-items: center; min-width: 0; gap: 10px; margin: 17px 4px 12px; padding: 9px; background: #f7f9fd; border: 1px solid #e8edf4; border-radius: 12px; }
+.admin-sidebar-account__avatar { display: grid; flex: 0 0 36px; width: 36px; height: 36px; place-items: center; color: #090b3d; background: #f8c864; border-radius: 11px; font-size: 12px; font-weight: 850; }
+.admin-sidebar-account__details { display: grid; flex: 1; min-width: 0; gap: 2px; }
+.admin-sidebar-account__details strong { overflow: hidden; color: #090b3d; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+.admin-sidebar-account__details small { color: #626d82; font-size: 11px; }
+.admin-nav-icon { display: block; width: 19px; height: 19px; flex: 0 0 19px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+.admin-sidebar-search { display: flex; align-items: center; gap: 9px; min-width: 0; margin: 0 4px 15px; padding: 0 11px; color: #69758b; background: #fff; border: 1px solid #dce3ed; border-radius: 9px; }
+.admin-sidebar-search:focus-within { border-color: #9c84c4; box-shadow: 0 0 0 3px rgba(9,11,61,.08); }
+.admin-sidebar-search input { width: 100%; min-width: 0; height: 38px; padding: 0; color: #090b3d; background: transparent; border: 0; outline: 0; font-size: 12px; }
+.admin-sidebar-search input::placeholder { color: #717c90; }
+.app-shell--admin .app-nav--admin { display: grid; align-content: start; gap: 3px; margin-top: 0; }
+.app-shell--admin .app-nav--admin .app-nav__label { margin: 7px 13px 5px; color: #6b7489; font-size: 10px; font-weight: 800; letter-spacing: .09em; }
+.app-shell--admin .app-nav--admin .admin-nav-section-label { margin-top: 16px; padding-top: 15px; border-top: 1px solid #e8edf4; }
+.app-shell--admin .app-nav--admin > a {
+    display: flex; align-items: center; gap: 13px; min-width: 0; min-height: 41px;
+    padding: 9px 12px; border: 0; border-radius: 9px;
+    color: #35415a; background: transparent; font-size: 12.5px; font-weight: 650;
+    transition: background-color .18s ease, color .18s ease, transform .18s ease;
+}
+.app-shell--admin .app-nav--admin > a .admin-nav-text { display: block; width: auto; height: auto; flex: 1 1 auto; min-width: 0; place-items: unset; overflow: hidden; color: inherit; font: inherit; text-overflow: ellipsis; white-space: nowrap; }
+.app-shell--admin .app-nav--admin > a:hover:not(.is-active) { color: #090b3d; background: #f2f5fa; transform: translateX(2px); }
+.app-shell--admin .app-nav--admin > a.is-active { color: #090b3d; background: #fff1cf; box-shadow: inset 3px 0 #e9a83d; }
+.app-shell--admin .app-nav--admin > a.is-active .admin-nav-icon { color: #aa562f; }
+.app-shell--admin .app-nav--admin > a.has-next-step { position: relative; }
+.app-shell--admin .app-nav--admin > a .admin-next-bubble {
+    display: inline-flex; width: auto; height: 21px; flex: 0 0 auto;
+    align-items: center; justify-content: center; padding: 0 7px;
+    color: #090b3d; background: #f8c864; border-radius: 20px;
+    font: 750 10px/1 system-ui, sans-serif; white-space: nowrap;
+}
+.app-shell--admin .app-sidebar__foot { display: grid; gap: 3px; margin-top: auto; padding: 13px 0 0; border-top: 1px solid #e8edf4; }
+.app-shell--admin .app-sidebar__foot form { margin: 0; }
+.app-shell--admin .app-sidebar__foot button {
+    display: flex; align-items: center; gap: 13px; width: 100%; min-height: 40px;
+    padding: 9px 12px; color: #46516a; background: transparent;
+    border: 0; border-radius: 9px; font-size: 12px; font-weight: 700;
+    text-align: left; cursor: pointer;
+}
+.app-shell--admin .app-sidebar__foot button:hover { color: #090b3d; background: #f2f5fa; }
+.app-shell--admin .app-sidebar__foot form button:hover { color: #a44032; background: #fff1eb; }
+.app-shell--admin .app-sidebar__foot button:focus-visible,
+.app-shell--admin .app-nav--admin a:focus-visible,
+.app-shell--admin .sidebar-close:focus-visible { outline: 2px solid #ad7228; outline-offset: -2px; }
+.app-shell--admin .sidebar-close { color: #090b3d; }
+.app-shell--admin .app-sidebar--admin .brand:focus-visible { outline: 2px solid #ad7228; }
+@media (min-width: 901px) {
+    .app-shell--admin.is-admin-collapsed { grid-template-columns: 72px minmax(0, 1fr); }
+    .app-shell--admin.is-admin-collapsed .app-sidebar--admin { padding-inline: 8px; }
+    .app-shell--admin.is-admin-collapsed .app-sidebar__head { padding: 0 0 9px; justify-content: center; overflow: hidden; }
+    .app-shell--admin.is-admin-collapsed .app-sidebar__head .brand { width: 50px; height: 50px; flex: 0 0 50px; overflow: hidden; }
+    .app-shell--admin.is-admin-collapsed .app-sidebar__head .brand__logo-window { width: 50px; height: 50px; flex-basis: 50px; overflow: hidden; }
+    .app-shell--admin.is-admin-collapsed .app-sidebar__head .brand__logo { width: 115px; height: 115px; top: -34px; left: -14px; }
+    .app-shell--admin.is-admin-collapsed .app-sidebar__head .brand__product,
+    .app-shell--admin.is-admin-collapsed .admin-sidebar-account__details,
+    .app-shell--admin.is-admin-collapsed .admin-sidebar-search,
+    .app-shell--admin.is-admin-collapsed .app-nav__label,
+    .app-shell--admin.is-admin-collapsed .admin-nav-text { display: none; }
+    .app-shell--admin.is-admin-collapsed .admin-sidebar-account { justify-content: center; margin-inline: 0; padding: 8px 0; border: 0; background: transparent; }
+    .app-shell--admin.is-admin-collapsed .app-nav--admin { margin-top: 14px; }
+    .app-shell--admin.is-admin-collapsed .app-nav--admin > a,
+    .app-shell--admin.is-admin-collapsed .app-sidebar__foot button { justify-content: center; padding-inline: 0; }
+    .app-shell--admin.is-admin-collapsed .app-nav--admin > a .admin-next-bubble {
+        position: absolute; top: 5px; right: 6px; display: block;
+        width: 8px; height: 8px; padding: 0; overflow: hidden;
+        border: 1px solid #fff; border-radius: 50%; font-size: 0;
+    }
+    .app-shell--admin.is-admin-collapsed .app-nav--admin > a:nth-of-type(5),
+    .app-shell--admin.is-admin-collapsed .app-nav--admin > a:nth-of-type(8) { margin-top: 12px; border-top: 1px solid #e8edf4; border-radius: 0 0 9px 9px; }
+    .app-shell--admin.is-admin-collapsed .admin-sidebar-collapse .admin-nav-icon { transform: rotate(180deg); }
+}
+@media (max-width: 900px) {
+    .app-shell--admin, .app-shell--admin.is-admin-collapsed { grid-template-columns: minmax(0,1fr); }
+    .app-shell--admin .app-sidebar--admin {
+        position: fixed; top: 0; left: 0; z-index: 70;
+        width: min(290px, 85vw); height: 100dvh;
+        transform: translateX(-105%);
+        box-shadow: 14px 0 34px rgba(9,11,61,.15);
+    }
+    .app-shell--admin .app-sidebar--admin.is-open { transform: translateX(0); }
+    .app-shell--admin .app-sidebar__head .sidebar-close { display: block; }
+    .app-shell--admin .app-sidebar__foot .admin-sidebar-collapse { display: none; }
+}
+
+/* Completion prompt. It only appears after a successful workflow action. */
+.admin-next-dialog { width: min(440px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); padding: 0; overflow: auto; color: #090b3d; background: #fff; border: 1px solid #dbe2ee; border-radius: 16px; box-shadow: 0 22px 75px rgba(9,11,61,.23); }
+.admin-next-dialog::backdrop { background: rgba(9,11,61,.48); }
+.admin-next-dialog__card { position: relative; padding: 30px; border-top: 5px solid #f8c864; }
+.admin-next-dialog__close { position: absolute; top: 14px; right: 14px; display: grid; width: 32px; height: 32px; place-items: center; color: #57627a; background: #f4f6fa; border: 0; border-radius: 8px; font-size: 22px; line-height: 1; cursor: pointer; }
+.admin-next-dialog__close:hover { color: #090b3d; background: #e9edf6; }
+.admin-next-dialog__eyebrow { display: block; margin-bottom: 10px; color: #a34a39; font-size: 11px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
+.admin-next-dialog h2 { margin: 0 20px 10px 0; font-size: clamp(20px, 3vw, 25px); line-height: 1.23; }
+.admin-next-dialog p { margin: 0; color: #56627b; font-size: 13px; line-height: 1.6; }
+.admin-next-dialog__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 13px; margin-top: 24px; }
+.admin-next-dialog__actions .button { min-height: 40px; padding: 10px 15px; font-size: 12px; }
+.admin-next-dialog__actions > button { min-height: 40px; padding: 8px 4px; color: #49556f; background: transparent; border: 0; font-size: 12px; font-weight: 700; cursor: pointer; }
+.admin-next-dialog__actions > button:hover { color: #090b3d; text-decoration: underline; }
+.admin-next-dialog button:focus-visible, .admin-next-dialog a:focus-visible { outline: 2px solid #ad7228; outline-offset: 2px; }
+@media (max-width: 420px) { .admin-next-dialog__card { padding: 24px 18px; } }
+
+
+/* =========================================================
+   SIDEBAR ADMIN FIX V1.3
+   ========================================================= */
+
+.app-shell--admin .app-sidebar--admin {
+    display: grid !important;
+    grid-template-rows: auto auto auto minmax(0, 1fr) auto;
+    width: 100%;
+    overflow: hidden !important;
+}
+
+/*
+ * Hanya daftar menu yang dapat bergulir.
+ * Logo, akun, pencarian, dan tombol bawah tetap terlihat.
+ */
+.app-shell--admin .app-nav--admin {
+    min-height: 0;
+    padding-right: 2px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #c9d1df transparent;
+}
+
+/* Pencarian koleksi */
+
+.app-shell--admin .admin-sidebar-search {
+    padding: 0 5px 0 11px;
+}
+
+.app-shell--admin .admin-sidebar-search input {
+    order: 1;
+}
+
+.app-shell--admin .admin-sidebar-search__submit {
+    order: 2;
+    display: grid;
+    width: 31px;
+    height: 31px;
+    flex: 0 0 31px;
+    padding: 0;
+    place-items: center;
+    color: #35415a;
+    background: #f1f4f9;
+    border: 0;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.app-shell--admin .admin-sidebar-search__submit:hover {
+    color: #090b3d;
+    background: #fff1cf;
+}
+
+.app-shell--admin .admin-sidebar-search__submit:focus-visible {
+    outline: 2px solid #ad7228;
+    outline-offset: 2px;
+}
+
+.app-shell--admin .admin-sidebar-search__submit .admin-nav-icon {
+    width: 16px;
+    height: 16px;
+}
+
+/* =========================================================
+   MODE RINGKAS DESKTOP
+   ========================================================= */
+
+@media (min-width: 901px) {
+    body.app-shell--admin.is-admin-collapsed {
+        grid-template-columns: 76px minmax(0, 1fr) !important;
+    }
+
+    body.app-shell--admin.is-admin-collapsed .app-sidebar--admin {
+        width: 76px !important;
+        padding: 14px 8px 12px !important;
+        grid-template-rows: auto minmax(0, 1fr) auto;
+    }
+
+    /*
+     * Logo tetap diam di atas.
+     * Yang ditampilkan hanya simbol BacaDulu.
+     */
+    body.app-shell--admin.is-admin-collapsed .app-sidebar__head {
+        min-height: 58px;
+        padding: 0 0 8px !important;
+        justify-content: center;
+        overflow: visible;
+    }
+
+    body.app-shell--admin.is-admin-collapsed
+        .app-sidebar__head
+        .brand {
+        display: block;
+        width: 42px !important;
+        height: 50px !important;
+        flex: 0 0 42px !important;
+        overflow: hidden;
+    }
+
+    body.app-shell--admin.is-admin-collapsed
+        .app-sidebar__head
+        .brand__logo-window {
+        display: block;
+        width: 42px !important;
+        height: 50px !important;
+        overflow: hidden;
+        flex-basis: 42px !important;
+        background: transparent;
+    }
+
+    body.app-shell--admin.is-admin-collapsed
+        .app-sidebar__head
+        .brand__logo {
+        top: -34px !important;
+        left: -14px !important;
+        width: 115px !important;
+        height: 115px !important;
+        max-width: none !important;
+    }
+
+    /*
+     * Paksa semua tulisan hilang saat mode ringkas.
+     * !important diperlukan karena ada CSS sidebar lama.
+     */
+    body.app-shell--admin.is-admin-collapsed .brand__product,
+    body.app-shell--admin.is-admin-collapsed .admin-sidebar-account,
+    body.app-shell--admin.is-admin-collapsed .admin-sidebar-search,
+    body.app-shell--admin.is-admin-collapsed .app-nav__label,
+    body.app-shell--admin.is-admin-collapsed .admin-nav-text {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+        min-width: 0 !important;
+        flex: 0 0 0 !important;
+        overflow: hidden !important;
+    }
+
+    body.app-shell--admin.is-admin-collapsed .app-nav--admin {
+        margin-top: 10px !important;
+        padding: 0 !important;
+    }
+
+    /*
+     * Menu menjadi ikon saja.
+     */
+    body.app-shell--admin.is-admin-collapsed
+        .app-nav--admin > a {
+        width: 48px !important;
+        min-width: 48px !important;
+        height: 44px;
+        min-height: 44px;
+        margin-inline: auto;
+        padding: 0 !important;
+        gap: 0 !important;
+        justify-content: center !important;
+        border-radius: 10px;
+        transform: none !important;
+    }
+
+    body.app-shell--admin.is-admin-collapsed
+        .app-nav--admin > a:hover {
+        transform: none !important;
+    }
+
+    body.app-shell--admin.is-admin-collapsed
+        .app-nav--admin > a .admin-nav-icon {
+        width: 21px;
+        height: 21px;
+        flex-basis: 21px;
+    }
+
+    /*
+     * Garis pemisah antarkelompok menu.
+     */
+    body.app-shell--admin.is-admin-collapsed
+        .app-nav--admin > a:nth-of-type(5),
+    body.app-shell--admin.is-admin-collapsed
+        .app-nav--admin > a:nth-of-type(8) {
+        margin-top: 12px;
+        padding-top: 8px !important;
+        border-top: 1px solid #e8edf4;
+        border-radius: 0 0 10px 10px;
+    }
+
+    /*
+     * Bubble arahan berubah menjadi titik kecil.
+     */
+    body.app-shell--admin.is-admin-collapsed
+        .app-nav--admin > a .admin-next-bubble {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        display: block;
+        width: 8px;
+        height: 8px;
+        padding: 0;
+        overflow: hidden;
+        background: #f8c864;
+        border: 1px solid #ffffff;
+        border-radius: 50%;
+        font-size: 0;
+    }
+
+    body.app-shell--admin.is-admin-collapsed .app-sidebar__foot {
+        padding-top: 10px;
+    }
+
+    body.app-shell--admin.is-admin-collapsed
+        .app-sidebar__foot button {
+        width: 48px !important;
+        min-width: 48px;
+        margin-inline: auto;
+        padding: 0 !important;
+        gap: 0 !important;
+        justify-content: center !important;
+    }
+
+    body.app-shell--admin.is-admin-collapsed
+        .admin-sidebar-collapse .admin-nav-icon {
+        transform: rotate(180deg);
+    }
+}
+
+/* =========================================================
+   MOBILE SIDEBAR
+   ========================================================= */
+
+@media (max-width: 900px) {
+    body.app-shell--admin,
+    body.app-shell--admin.is-admin-collapsed {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+
+    /*
+     * Sidebar tidak terlihat sebelum hamburger ditekan.
+     */
+    body.app-shell--admin .app-sidebar--admin {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 70;
+        width: min(310px, calc(100vw - 24px)) !important;
+        height: 100dvh;
+        padding: 16px 13px 13px !important;
+        grid-template-rows: auto auto auto minmax(0, 1fr) auto;
+        transform: translateX(-105%);
+        transition: transform .28s cubic-bezier(.22, 1, .36, 1);
+        box-shadow: 14px 0 34px rgba(9, 11, 61, .18);
+    }
+
+    body.app-shell--admin .app-sidebar--admin.is-open {
+        transform: translateX(0);
+    }
+
+    /*
+     * Tombol hamburger pada topbar mobile.
+     */
+    body.app-shell--admin .sidebar-open {
+        display: grid !important;
+        width: 42px;
+        height: 42px;
+        flex: 0 0 42px;
+        padding: 0;
+        place-items: center;
+        color: #090b3d;
+        background: #fff1cf;
+        border: 1px solid #ead59e;
+        border-radius: 9px;
+        cursor: pointer;
+    }
+
+    body.app-shell--admin .sidebar-open .admin-nav-icon {
+        width: 21px;
+        height: 21px;
+    }
+
+    body.app-shell--admin .app-sidebar__head .sidebar-close {
+        display: grid;
+        width: 36px;
+        height: 36px;
+        flex: 0 0 36px;
+        padding: 0;
+        place-items: center;
+        color: #090b3d;
+        background: #f3f5f9;
+        border-radius: 8px;
+    }
+
+    /*
+     * Mode ringkas tidak digunakan di HP.
+     * Menu mobile selalu tampil lengkap saat dibuka.
+     */
+    body.app-shell--admin.is-admin-collapsed .brand__product,
+    body.app-shell--admin.is-admin-collapsed .admin-sidebar-account,
+    body.app-shell--admin.is-admin-collapsed .admin-sidebar-search,
+    body.app-shell--admin.is-admin-collapsed .app-nav__label,
+    body.app-shell--admin.is-admin-collapsed .admin-nav-text {
+        display: initial;
+        width: auto;
+        height: auto;
+        overflow: visible;
+    }
+
+    body.app-shell--admin.is-admin-collapsed
+        .admin-sidebar-account {
+        display: flex;
+    }
+
+    body.app-shell--admin.is-admin-collapsed
+        .admin-sidebar-search {
+        display: flex;
+    }
+
+    body.app-shell--admin.is-admin-collapsed
+        .app-nav__label {
+        display: block;
+    }
+
+    body.app-shell--admin.is-admin-collapsed
+        .admin-nav-text {
+        display: block;
+        flex: 1 1 auto;
+    }
+
+    body.app-shell--admin
+        .app-sidebar__foot
+        .admin-sidebar-collapse {
+        display: none !important;
+    }
+}
+
+/* =========================================================
+   SIDEBAR POLISH V1.3.1
+   ========================================================= */
+
+/*
+ * Scroll tetap berfungsi menggunakan mouse wheel,
+ * touchpad, keyboard, dan sentuhan.
+ * Hanya batang scroll yang disembunyikan.
+ */
+.app-shell--admin .app-sidebar--admin,
+.app-shell--admin .app-nav--admin {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.app-shell--admin .app-sidebar--admin::-webkit-scrollbar,
+.app-shell--admin .app-nav--admin::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+.app-shell--admin .app-nav--admin {
+    overscroll-behavior: contain;
+}
+
+/* Hilangkan ukuran font bawaan tombol X lama */
+
+.app-shell--admin .sidebar-close {
+    font-size: 0;
+}
+
+.app-shell--admin .sidebar-close .admin-nav-icon {
+    width: 19px;
+    height: 19px;
+    flex: 0 0 19px;
+}
+
+/* Tampilan tombol close pada mobile */
+
+@media (max-width: 900px) {
+    body.app-shell--admin .app-sidebar__head {
+        position: relative;
+        padding-right: 48px !important;
+    }
+
+    body.app-shell--admin
+        .app-sidebar__head
+        .sidebar-close {
+        position: absolute;
+        top: 9px;
+        right: 0;
+
+        display: grid !important;
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+        min-height: 38px;
+        padding: 0;
+
+        place-items: center;
+
+        color: #090b3d;
+        background: #f7f8fc;
+        border: 1px solid #dfe4ed;
+        border-radius: 10px;
+
+        box-shadow: 0 3px 10px rgba(9, 11, 61, 0.06);
+
+        cursor: pointer;
+        transition:
+            color 0.18s ease,
+            background-color 0.18s ease,
+            border-color 0.18s ease,
+            transform 0.18s ease;
+    }
+
+    body.app-shell--admin
+        .app-sidebar__head
+        .sidebar-close:hover {
+        color: #a44032;
+        background: #fff1eb;
+        border-color: #efc9be;
+    }
+
+    body.app-shell--admin
+        .app-sidebar__head
+        .sidebar-close:active {
+        transform: scale(0.94);
+    }
+
+    body.app-shell--admin
+        .app-sidebar__head
+        .sidebar-close:focus-visible {
+        outline: 2px solid #ad7228;
+        outline-offset: 2px;
+    }
+}
