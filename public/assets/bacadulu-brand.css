@@ -1,79 +1,499 @@
-/* Let the transparent logo blend into the public navbar without a white tile. */
+/*
+|--------------------------------------------------------------------------
+| BacaDulu Dataset — Public Brand System
+|--------------------------------------------------------------------------
+*/
+
+body.public-shell {
+    --ink: #211b3f;
+    --ink-soft: #4f4a60;
+    --forest: #30255f;
+    --forest-deep: #201747;
+    --cream: #f6f1e8;
+    --paper: #fffdf8;
+    --white: #ffffff;
+    --line: #ded8cf;
+    --line-dark: #bbb3aa;
+    --muted: #706a77;
+    --accent: #f5bd3d;
+    --accent-strong: #e2a726;
+    --accent-soft: #fff2c9;
+    --coral: #e45a49;
+    --coral-dark: #bd4034;
+
+    color: var(--ink);
+    background: var(--paper);
+}
+
+body.public-shell ::selection {
+    color: #ffffff;
+    background: var(--coral);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Header
+|--------------------------------------------------------------------------
+*/
+
+.public-shell .site-header {
+    background: rgba(255, 253, 248, 0.97);
+    border-bottom: 1px solid transparent;
+    backdrop-filter: blur(14px);
+}
+
+.public-shell .site-header.is-scrolled {
+    border-bottom-color: var(--line);
+    box-shadow: 0 8px 24px rgba(32, 23, 71, 0.055);
+}
+
+.public-shell .site-header__inner {
+    min-height: 82px;
+    gap: clamp(22px, 3vw, 46px);
+}
+
+.public-shell .site-header .brand {
+    gap: 8px;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Logo
+|--------------------------------------------------------------------------
+| Logo tidak dipaksa melebar atau gepeng.
+| Background/card di belakang logo dihilangkan.
+*/
+
 .public-shell .site-header .brand__logo-window {
+    position: relative;
+    display: block;
+    width: 124px;
+    height: 60px;
+    flex: 0 0 124px;
+    overflow: hidden;
+
     background: transparent;
     border: 0;
     box-shadow: none;
 }
 
-/* Frame the visible pixels against the dark footer separately. */
-.bd-footer-company .bd-footer-company__logo {
+.public-shell .site-header .brand__logo {
+    position: absolute;
+    top: -49px;
+    left: -20px;
+
+    width: 164px;
+    height: 164px;
+    max-width: none;
+
+    object-fit: contain;
+    object-position: center;
+}
+
+.public-shell .site-header .brand__product {
+    padding-left: 10px;
+
+    color: var(--forest-deep);
+    border-left: 1px solid #d1cbc4;
+
+    font-size: 9px;
+    font-weight: 850;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Navigation
+|--------------------------------------------------------------------------
+*/
+
+.public-shell .site-nav {
+    gap: 5px;
+}
+
+.public-shell .site-nav a {
+    position: relative;
+    padding: 10px 13px;
+
+    color: #4d4858;
+    border-radius: 999px;
+
+    font-size: 12px;
+    font-weight: 720;
+
+    transition:
+        color 0.18s ease,
+        background-color 0.18s ease;
+}
+
+.public-shell .site-nav a::after {
+    display: none;
+}
+
+.public-shell .site-nav a:hover {
+    color: var(--forest-deep);
+    background: #f1ecf7;
+}
+
+.public-shell .site-nav a.is-active {
+    color: var(--forest-deep);
+    background: #e9e1f3;
+}
+
+.public-shell .site-header__actions {
+    gap: 15px;
+}
+
+.public-shell .site-header__actions .text-link {
+    color: var(--forest-deep);
+    font-weight: 750;
+}
+
+.public-shell .site-header__actions .text-link:hover {
+    color: var(--coral-dark);
+}
+
+.public-shell .site-header__actions .button--ink {
+    min-height: 42px;
+    padding-inline: 18px;
+
+    color: #ffffff;
+    background: var(--coral);
+    border-color: var(--coral);
+    border-radius: 999px;
+    box-shadow: none;
+}
+
+.public-shell .site-header__actions .button--ink:hover {
+    color: #ffffff;
+    background: var(--coral-dark);
+    border-color: var(--coral-dark);
+    box-shadow: none;
+    transform: translateY(-1px);
+}
+
+.public-shell .nav-toggle {
+    color: var(--forest-deep);
+    background: var(--accent-soft);
+    border-color: #ead99f;
+    border-radius: 50%;
+}
+
+.public-shell .nav-toggle span:not(.sr-only) {
+    background: currentColor;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Shared buttons
+|--------------------------------------------------------------------------
+*/
+
+.public-shell .button {
+    border-radius: 3px;
+    box-shadow: none;
+}
+
+.public-shell .button--ink {
+    color: #ffffff;
+    background: var(--forest-deep);
+    border-color: var(--forest-deep);
+    box-shadow: none;
+}
+
+.public-shell .button--ink:hover {
+    color: #ffffff;
+    background: var(--coral-dark);
+    border-color: var(--coral-dark);
+    box-shadow: none;
+}
+
+.public-shell .button--line {
+    color: var(--forest-deep);
+    background: transparent;
+    border-color: #bdb4ab;
+}
+
+.public-shell .button--line:hover {
+    color: var(--forest-deep);
+    background: var(--accent-soft);
+    border-color: var(--forest-deep);
+}
+
+.public-shell :focus-visible {
+    outline-color: var(--coral);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Catalog page
+|--------------------------------------------------------------------------
+*/
+
+.public-shell .catalog-hero {
+    background: var(--cream);
+    border-bottom-color: var(--line);
+}
+
+.public-shell .catalog-hero h1 {
+    color: var(--forest-deep);
+
+    font-size: clamp(40px, 4.6vw, 66px);
+    font-weight: 820;
+    letter-spacing: -0.055em;
+    line-height: 1.02;
+}
+
+.public-shell .catalog-hero__title p {
+    color: var(--muted);
+}
+
+.public-shell .scope-switch {
+    overflow: hidden;
+
+    border-color: var(--line-dark);
+    border-radius: 3px;
+}
+
+.public-shell .scope-switch__item {
+    border-right-color: var(--line);
+}
+
+.public-shell .scope-switch__item.is-active {
+    color: #ffffff;
+    background: var(--forest-deep);
+    box-shadow: inset 0 -4px 0 var(--accent);
+}
+
+.public-shell .scope-switch__item:hover:not(.is-active) {
+    color: var(--forest-deep);
+    background: var(--accent-soft);
+}
+
+.public-shell .catalog-filter {
+    background: #ffffff;
+    border-color: var(--line-dark);
+    border-radius: 3px;
+    box-shadow: 8px 8px 0 #eee6da;
+}
+
+.public-shell .catalog-filter .button--ink,
+.public-shell .catalog-filter-toggle {
+    color: #ffffff;
+    background: var(--forest-deep);
+    border-color: var(--forest-deep);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Variable list
+|--------------------------------------------------------------------------
+*/
+
+.public-shell .variable-list {
+    overflow: hidden;
+
+    background: #ffffff;
+    border-color: var(--line);
+    border-radius: 3px;
+}
+
+.public-shell .variable-row {
+    border-bottom-color: var(--line);
+}
+
+.public-shell .variable-row:hover {
+    background: #fff8e8;
+}
+
+.public-shell .variable-row::before {
+    background: var(--coral);
+}
+
+.public-shell .variable-row h2,
+.public-shell .variable-row h3 {
+    color: var(--forest-deep);
+}
+
+.public-shell .variable-row__eyeline code {
+    color: var(--forest-deep);
+    background: #eee8f4;
+    border-color: #ddd2e8;
+}
+
+.public-shell .pagination .active span {
+    color: #ffffff;
+    background: var(--coral);
+    border-color: var(--coral);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Dataset detail
+|--------------------------------------------------------------------------
+*/
+
+.public-shell .variable-detail-hero,
+.public-shell .dataset-detail-hero {
+    color: #ffffff;
+    background: var(--forest-deep);
+}
+
+.public-shell .variable-detail-hero h1,
+.public-shell .dataset-detail-hero h1 {
+    font-size: clamp(38px, 4.8vw, 68px);
+    font-weight: 790;
+    letter-spacing: -0.05em;
+}
+
+.public-shell .access-panel__sticky {
+    border-color: var(--forest-deep);
+    border-radius: 2px;
+    box-shadow: 8px 8px 0 var(--accent-soft);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Footer
+|--------------------------------------------------------------------------
+*/
+
+.public-shell .bd-footer {
+    background: #18132f;
+}
+
+.public-shell .bd-footer-decoration {
+    display: none;
+}
+
+.public-shell .bd-footer-title span {
+    color: var(--accent);
+}
+
+.public-shell .bd-footer-company {
+    background: transparent;
+    border-color: rgba(255, 255, 255, 0.16);
+    border-radius: 3px;
+}
+
+.public-shell .bd-footer-company .bd-footer-company__logo {
     position: relative;
     display: block;
-    flex: 0 0 78px;
-    width: 78px;
-    height: 50px;
+    width: 82px;
+    height: 52px;
+    flex: 0 0 82px;
     overflow: hidden;
-    background: #fff;
-    border-radius: 7px;
+    background: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(9, 6, 28, 0.22);
 }
-.bd-footer-company .bd-footer-company__logo img {
+
+.public-shell .bd-footer-company .bd-footer-company__logo img {
     position: absolute;
-    top: -28px;
-    left: -14px;
+    top: -31px;
+    left: -13px;
     display: block;
-    width: 106px;
-    height: 106px;
+    width: 110px;
+    height: 110px;
     max-width: none;
-    object-fit: fill;
+    object-fit: contain;
     background: transparent;
     border-radius: 0;
 }
 
-/* Public colour system. Admin pages retain their own palette. */
-body.public-shell {
-    --ink: #20233d;
-    --ink-soft: #3d4052;
-    --forest: #352864;
-    --forest-deep: #241b52;
-    --cream: #faf9f6;
-    --paper: #fff;
-    --line: #e8e5e6;
-    --line-dark: #cfcbd3;
-    --muted: #606477;
-    --accent: #ffc145;
-    --accent-strong: #e3a82e;
-    --accent-soft: #fff6e2;
-    --coral: #e85d4d;
-    color: var(--ink);
-    background: #fff;
+.public-shell .bd-footer-company .bd-footer-company__logo img {
+    position: absolute;
+    top: -31px;
+    left: -13px;
+
+    display: block;
+
+    width: 110px;
+    height: 110px;
+    max-width: none;
+
+    object-fit: contain;
+    background: transparent;
+    border-radius: 0;
 }
-.public-shell .site-header { background: rgba(255, 255, 255, .98); border-bottom-color: #e8e5e6; }
-.public-shell .site-nav a { color: #35334a; }
-.public-shell .site-nav a:hover, .public-shell .site-nav a.is-active { color: #241b52; }
-.public-shell .site-nav a::after { background: #ffc145; }
-.public-shell .site-header .brand__product { color: #241b52; border-left-color: #d8d5db; }
-.public-shell .site-header__actions .text-link { color: #241b52; }
-.public-shell .site-header__actions .button--ink {
-    color: #fff;
-    background: #c24638;
-    border-color: #c24638;
-    box-shadow: none;
+
+.public-shell .bd-footer-map,
+.public-shell .bd-footer-contact-icon,
+.public-shell .bd-footer-socials a {
+    border-radius: 3px;
 }
-.public-shell .site-header__actions .button--ink:hover { background: #a83a31; border-color: #a83a31; box-shadow: none; }
-.public-shell .catalog-hero { background: #faf9f6; }
-.public-shell .catalog-hero h1 { color: #241b52; font-size: clamp(32px, 3.2vw, 44px); }
-.public-shell .scope-switch { border-color: #e8e5e6; }
-.public-shell .scope-switch__item { border-right-color: #e8e5e6; }
-.public-shell .scope-switch__item.is-active { color: #fff; background: #241b52; box-shadow: inset 0 -4px 0 #ffc145; }
-.public-shell .scope-switch__item:hover:not(.is-active) { background: #fff6e2; }
-.public-shell .catalog-filter { border-color: #e8e5e6; box-shadow: 0 9px 25px rgba(36,27,82,.05); }
-.public-shell .catalog-filter .button--ink, .public-shell .catalog-filter-toggle { background: #241b52; border-color: #241b52; }
-.public-shell .variable-row { border-bottom-color: #e8e5e6; }
-.public-shell .variable-row:hover { background: #fffaf2; }
-.public-shell .variable-row::before { background: #df5244; }
-.public-shell .variable-row h2 { color: #241b52; font-size: clamp(18px, 1.6vw, 22px); }
-.public-shell .variable-row__eyeline code { color: #493479; background: #f3f0f7; border-color: #e2dce9; }
-.public-shell .variable-detail-hero { background: #241b52; }
-.public-shell .variable-detail-hero h1 { font-size: clamp(34px, 3.8vw, 52px); }
-.public-shell .bd-footer { background: #171526; }
-.public-shell .bd-footer-decoration { background: none; }
+
+/*
+|--------------------------------------------------------------------------
+| Responsive
+|--------------------------------------------------------------------------
+*/
+
+@media (max-width: 980px) {
+    .public-shell .site-header__inner {
+        min-height: 72px;
+    }
+
+    .public-shell .site-nav {
+        gap: 2px;
+    }
+
+    .public-shell .site-nav a {
+        padding-inline: 10px;
+    }
+}
+
+@media (max-width: 900px) {
+    .public-shell .site-header .brand__logo-window {
+        width: 112px;
+        height: 56px;
+        flex-basis: 112px;
+    }
+
+    .public-shell .site-header .brand__logo {
+        top: -44px;
+        left: -18px;
+
+        width: 148px;
+        height: 148px;
+    }
+
+    .public-shell .site-header .brand__product {
+        display: none;
+    }
+
+    .public-shell .site-nav {
+        top: 72px;
+        gap: 4px;
+
+        background: var(--paper);
+        border-bottom: 1px solid var(--line);
+    }
+
+    .public-shell .site-nav a {
+        padding: 12px;
+        border-radius: 3px;
+    }
+}
+
+@media (max-width: 480px) {
+    .public-shell .site-header .brand__logo-window {
+        width: 102px;
+        flex-basis: 102px;
+    }
+
+    .public-shell .site-header .brand__logo {
+        left: -20px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .public-shell *,
+    .public-shell *::before,
+    .public-shell *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+}

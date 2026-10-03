@@ -49,13 +49,19 @@ class DataConnectorController extends Controller
     public function create(Request $request): View
     {
         $selectedDataset = $request->integer('dataset') > 0
-            ? Dataset::where('data_scope', 'regional')->find($request->integer('dataset'))
+            ? Dataset::with([
+                'provider',
+                'variables' => fn ($query) => $query->orderBy('name'),
+            ])->find($request->integer('dataset'))
             : null;
 
         return view('admin.automation.create', [
             'connector' => new DataConnector(['status' => 'active', 'schedule' => 'manual', 'config' => ['language' => 'ind']]),
-            'datasets' => $this->availableDatasets($selectedDataset?->id),
+            'datasets' => $this->availableDatasets(
+                $selectedDataset?->data_scope === 'regional' ? $selectedDataset->id : null
+            ),
             'selectedDataset' => $selectedDataset,
+            'setupIssues' => $this->setupIssues($selectedDataset),
         ]);
     }
 
@@ -76,7 +82,14 @@ class DataConnectorController extends Controller
         AuditService::record('data_connector.created', $connector, ['type' => 'bps']);
 
         return redirect()->route('admin.automation.index', ['dataset' => $variable->dataset_id])
-            ->with('success', 'Konektor BPS dibuat. Jalankan sinkronisasi pertama untuk memeriksa pemetaan data.');
+            ->with('success', 'Konektor BPS dibuat. Data belum masuk ke katalog sampai sinkronisasi dijalankan, ditinjau, dan diterapkan.')
+            ->with('admin_next_step', [
+                'title' => 'Konektor siap digunakan',
+                'description' => 'Jalankan sinkronisasi pertama. Hasil BPS akan masuk ke staging agar dapat diperiksa sebelum diterapkan ke koleksi.',
+                'label' => 'Buka pusat sinkronisasi',
+                'url' => route('admin.automation.index', ['dataset' => $variable->dataset_id]),
+                'nav' => 'automation',
+            ]);
     }
 
     public function edit(DataConnector $connector): View
@@ -84,6 +97,11 @@ class DataConnectorController extends Controller
         return view('admin.automation.edit', [
             'connector' => $connector->load(['dataset', 'variable']),
             'datasets' => $this->availableDatasets(null, $connector->dataset_variable_id),
+            'selectedDataset' => $connector->dataset->loadMissing([
+                'provider',
+                'variables' => fn ($query) => $query->orderBy('name'),
+            ]),
+            'setupIssues' => [],
         ]);
     }
 
@@ -164,6 +182,11 @@ class DataConnectorController extends Controller
                 'dataset_variable_id' => 'Konektor BPS hanya dapat dipasang pada dataset Statistik wilayah & pemerintah.',
             ]);
         }
+        if (! $variable->is_active && $connector?->dataset_variable_id !== $variable->id) {
+            throw ValidationException::withMessages([
+                'dataset_variable_id' => 'Aktifkan variabel tujuan sebelum membuat konektor BPS.',
+            ]);
+        }
 
         return [$validated, $variable];
     }
@@ -210,5 +233,32 @@ class DataConnectorController extends Controller
             })
             ->orderBy('title')
             ->get();
+    }
+
+    private function setupIssues(?Dataset $dataset): array
+    {
+        if ($dataset === null) {
+            return [];
+        }
+
+        $issues = [];
+
+        if ($dataset->data_scope !== 'regional') {
+            $issues[] = 'Jenis koleksi masih Perusahaan & ESG. Konektor BPS hanya tersedia untuk Statistik wilayah & pemerintah.';
+        }
+
+        if (! $dataset->relationLoaded('provider') || $dataset->provider === null) {
+            $issues[] = 'Koleksi belum mempunyai penyedia data.';
+        } elseif ($dataset->provider->status !== 'active') {
+            $issues[] = 'Penyedia data '.$dataset->provider->name.' belum aktif.';
+        }
+
+        if ($dataset->variables->isEmpty()) {
+            $issues[] = 'Koleksi belum mempunyai variabel.';
+        } elseif ($dataset->variables->where('is_active', true)->isEmpty()) {
+            $issues[] = 'Semua variabel pada koleksi ini nonaktif. Aktifkan minimal satu variabel.';
+        }
+
+        return $issues;
     }
 }

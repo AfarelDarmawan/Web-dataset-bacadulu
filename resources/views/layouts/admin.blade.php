@@ -7,7 +7,7 @@
     <title>{{ trim($__env->yieldContent('title', 'Admin')) }} — BacaDulu Dataset</title>
     <link rel="icon" type="image/png" href="{{ asset('assets/bacadulu-logo.png') }}">
     <link rel="stylesheet" href="{{ asset('assets/bacadulu-dataset.css') }}?v=7.6.0">
-    <link rel="stylesheet" href="{{ asset('assets/bacadulu-admin.css') }}?v=1.3.1">
+    <link rel="stylesheet" href="{{ asset('assets/bacadulu-admin.css') }}?v=1.3.2">
     @if(request()->routeIs('admin.dashboard'))
         <link rel="stylesheet" href="{{ asset('assets/bacadulu-admin-dashboard.css') }}?v=1.0.0">
     @endif
@@ -15,7 +15,7 @@
         <link rel="stylesheet" href="{{ asset('assets/bacadulu-admin-collections.css') }}?v=1.0.0">
     @endif
     <script src="{{ asset('assets/gsap.min.js') }}?v=3.13.0" defer></script>
-    <script src="{{ asset('assets/bacadulu-dataset.js') }}?v=7.6.3" defer></script>
+    <script src="{{ asset('assets/bacadulu-dataset.js') }}?v=7.6.4" defer></script>
 </head>
 @php
     $datasetContext = request()->route('dataset');
@@ -62,58 +62,27 @@
         <symbol id="ad-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
         <symbol id="ad-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
     </svg>
-
     <aside class="app-sidebar app-sidebar--admin" data-sidebar id="admin-sidebar">
         <div class="app-sidebar__head">
             <a class="brand" href="{{ route('admin.dashboard') }}" aria-label="BacaDulu Dataset - Beranda admin">
                 <span class="brand__logo-window" aria-hidden="true"><img class="brand__logo" src="{{ asset('assets/bacadulu-logo.png') }}" alt="" width="447" height="447"></span>
                 <span class="brand__product">Dataset</span>
             </a>
-            <button
-    class="sidebar-close"
-    type="button"
-    data-sidebar-close
-    aria-label="Tutup menu admin"
->
-    <svg class="admin-nav-icon" aria-hidden="true">
-        <use href="#ad-close"/>
-    </svg>
-
-    <span class="sr-only">Tutup menu admin</span>
-</button>
+            <button class="sidebar-close" type="button" data-sidebar-close aria-label="Tutup menu admin">
+                <svg class="admin-nav-icon" aria-hidden="true"><use href="#ad-close"/></svg>
+                <span class="sr-only">Tutup menu admin</span>
+            </button>
         </div>
         <div class="admin-sidebar-account">
             <span class="admin-sidebar-account__avatar" aria-hidden="true">{{ $adminInitials ?: 'A' }}</span>
             <span class="admin-sidebar-account__details"><strong>{{ $adminName }}</strong><small>Administrator</small></span>
         </div>
-        <form
-    class="admin-sidebar-search"
-    method="GET"
-    action="{{ route('admin.datasets.index') }}"
-    role="search"
-    data-admin-search
->
-    <input
-        data-admin-search-input
-        type="search"
-        name="q"
-        placeholder="Cari koleksi"
-        aria-label="Cari koleksi data"
-        value="{{ request()->routeIs('admin.datasets.index') ? request('q') : '' }}"
-        required
-    >
-
-    <button
-        class="admin-sidebar-search__submit"
-        type="submit"
-        aria-label="Cari koleksi"
-        title="Cari koleksi"
-    >
-        <svg class="admin-nav-icon" aria-hidden="true">
-            <use href="#ad-search"/>
-        </svg>
-    </button>
-</form>
+        <form class="admin-sidebar-search" method="GET" action="{{ route('admin.datasets.index') }}" role="search" data-admin-search>
+            <input data-admin-search-input type="search" name="q" placeholder="Cari koleksi" aria-label="Cari koleksi data" value="{{ request()->routeIs('admin.datasets.index') ? request('q') : '' }}" required>
+            <button class="admin-sidebar-search__submit" type="submit" aria-label="Cari koleksi" title="Cari koleksi">
+                <svg class="admin-nav-icon" aria-hidden="true"><use href="#ad-search"/></svg>
+            </button>
+        </form>
         <nav class="app-nav app-nav--admin" aria-label="Menu utama admin">
             <span class="app-nav__label">Ruang kerja</span>
             <a title="Beranda admin" class="{{ request()->routeIs('admin.dashboard') ? 'is-active' : '' }}" href="{{ route('admin.dashboard') }}" @if(request()->routeIs('admin.dashboard')) aria-current="page" @endif><svg class="admin-nav-icon" aria-hidden="true"><use href="#ad-home"/></svg><span class="admin-nav-text">Beranda admin</span></a>
@@ -122,7 +91,7 @@
             <a title="Permintaan akses" class="{{ request()->routeIs('admin.requests.*') ? 'is-active' : '' }}" href="{{ route('admin.requests.index') }}" @if(request()->routeIs('admin.requests.*')) aria-current="page" @endif><svg class="admin-nav-icon" aria-hidden="true"><use href="#ad-inbox"/></svg><span class="admin-nav-text">Permintaan akses</span></a>
             <span class="app-nav__label admin-nav-section-label">Isi data</span>
             <a title="Sumber data" class="{{ request()->routeIs('admin.providers.*') ? 'is-active' : '' }}" href="{{ route('admin.providers.index') }}" @if(request()->routeIs('admin.providers.*')) aria-current="page" @endif><svg class="admin-nav-icon" aria-hidden="true"><use href="#ad-source"/></svg><span class="admin-nav-text">Sumber data</span></a>
-            <a title="Sinkronisasi BPS" class="{{ request()->routeIs('admin.automation.*') ? 'is-active' : '' }}" href="{{ route('admin.automation.index') }}" @if(request()->routeIs('admin.automation.*')) aria-current="page" @endif><svg class="admin-nav-icon" aria-hidden="true"><use href="#ad-sync"/></svg><span class="admin-nav-text">Sinkronisasi BPS</span></a>
+            <a data-admin-nav="automation" title="Sinkronisasi BPS" class="{{ request()->routeIs('admin.automation.*') ? 'is-active' : '' }}" href="{{ route('admin.automation.index') }}" @if(request()->routeIs('admin.automation.*')) aria-current="page" @endif><svg class="admin-nav-icon" aria-hidden="true"><use href="#ad-sync"/></svg><span class="admin-nav-text">Sinkronisasi BPS</span></a>
             <a title="Dokumen &amp; ekstraksi" class="{{ request()->routeIs('admin.ai.*', 'admin.source-documents.*', 'admin.ai-extractions.*') ? 'is-active' : '' }}" href="{{ route('admin.ai.index') }}" @if(request()->routeIs('admin.ai.*', 'admin.source-documents.*', 'admin.ai-extractions.*')) aria-current="page" @endif><svg class="admin-nav-icon" aria-hidden="true"><use href="#ad-file"/></svg><span class="admin-nav-text">Dokumen &amp; ekstraksi</span></a>
             <span class="app-nav__label admin-nav-section-label">Akun &amp; sistem</span>
             <a title="Pengguna" class="{{ request()->routeIs('admin.users.*') ? 'is-active' : '' }}" href="{{ route('admin.users.index') }}" @if(request()->routeIs('admin.users.*')) aria-current="page" @endif><svg class="admin-nav-icon" aria-hidden="true"><use href="#ad-users"/></svg><span class="admin-nav-text">Pengguna</span></a>
@@ -130,26 +99,15 @@
         </nav>
         <div class="app-sidebar__foot">
             <button type="button" class="admin-sidebar-collapse" data-admin-collapse aria-label="Ringkas sidebar" aria-expanded="true" title="Ringkas sidebar"><svg class="admin-nav-icon" aria-hidden="true"><use href="#ad-collapse"/></svg><span class="admin-nav-text">Ringkas menu</span></button>
-            <form method="POST" action="{{ route('admin.logout') }}">@csrf<button type="submit" title="Keluar dari admin"><svg class="admin-nav-icon" aria-hidden="true"><use href="#ad-logout"/></svg><span class="admin-nav-text">Keluar</span></button>
-            </form>
+            <form method="POST" action="{{ route('admin.logout') }}">@csrf<button type="submit" title="Keluar dari admin"><svg class="admin-nav-icon" aria-hidden="true"><use href="#ad-logout"/></svg><span class="admin-nav-text">Keluar</span></button></form>
         </div>
     </aside>
     <div class="app-main">
         <header class="app-topbar">
-            <button
-    class="sidebar-open"
-    type="button"
-    data-sidebar-open
-    aria-label="Buka menu admin"
-    aria-controls="admin-sidebar"
-    aria-expanded="false"
->
-    <svg class="admin-nav-icon" aria-hidden="true">
-        <use href="#ad-menu"/>
-    </svg>
-
-    <span class="sr-only">Buka menu admin</span>
-</button>
+            <button class="sidebar-open" type="button" data-sidebar-open aria-label="Buka menu admin" aria-controls="admin-sidebar" aria-expanded="false">
+                <svg class="admin-nav-icon" aria-hidden="true"><use href="#ad-menu"/></svg>
+                <span class="sr-only">Buka menu admin</span>
+            </button>
             <nav class="admin-breadcrumb" aria-label="Posisi halaman">
                 <a href="{{ route('admin.dashboard') }}">Admin</a>
                 <span aria-hidden="true">/</span>

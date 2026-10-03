@@ -16,23 +16,25 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->trustHosts(at: function (): array {
-            $host = parse_url((string) config('app.url'), PHP_URL_HOST);
-            $configuredHost = is_string($host) && $host !== ''
-                ? '^'.preg_quote($host, '/').'$'
-                : '(?!)';
+    $middleware->trustProxies(at: '*');
 
-            if (app()->environment('production')) {
-                return [$configuredHost];
-            }
+    $middleware->trustHosts(at: function (): array {
+        $host = parse_url((string) config('app.url'), PHP_URL_HOST);
+        $configuredHost = is_string($host) && $host !== ''
+            ? '^'.preg_quote($host, '/').'$'
+            : '(?!)';
 
-            return array_values(array_unique([
-                $configuredHost,
-                '^localhost$',
-                '^127\.0\.0\.1$',
-                '^\[?::1\]?$',
-            ]));
-        }, subdomains: false);
+        if (app()->environment('production')) {
+            return [$configuredHost];
+        }
+
+        return array_values(array_unique([
+            $configuredHost,
+            '^localhost$',
+            '^127\.0\.0\.1$',
+            '^\[?::1\]?$',
+        ]));
+    }, subdomains: false);
 
         $middleware->append(SecurityHeaders::class);
 

@@ -51,6 +51,45 @@ class BpsDataSyncTest extends TestCase
         $this->assertDatabaseMissing('data_sync_rows', ['data_sync_run_id' => $run->id, 'status' => 'applied']);
     }
 
+    public function test_mock_sync_respects_configured_dimension_ids(): void
+    {
+        [$admin, $dataset, $variable, $connector] = $this->fixtures();
+        $connector->update(['config' => array_merge($connector->config, [
+            'derived_variable_id' => 289,
+            'vertical_variable_id' => 9999,
+            'derived_period_id' => 3,
+        ])]);
+
+        $run = app(BpsConnectorService::class)->run($connector->fresh(), $admin);
+
+        $this->assertSame('review', $run->status);
+        $this->assertSame(2, $run->rows_count);
+        $this->assertSame('9999', $run->rows()->first()->geography_code);
+        $this->assertSame(0, $dataset->observations()->count());
+    }
+
+    public function test_missing_bps_dimension_reports_requested_and_available_ids(): void
+    {
+        [$admin, $dataset, $variable, $connector] = $this->fixtures();
+        $connector->update(['config' => array_merge($connector->config, ['derived_variable_id' => 289])]);
+        $payload = [
+            'var' => [['val' => 145, 'label' => 'Penduduk']],
+            'turvar' => [['val' => 1, 'label' => 'Laki-laki'], ['val' => 2, 'label' => 'Perempuan']],
+            'vervar' => [['val' => 3100, 'label' => 'DKI Jakarta']],
+            'tahun' => [['val' => 115, 'label' => '2025']],
+            'datacontent' => ['310014511150' => 500],
+        ];
+
+        try {
+            app(BpsPayloadTransformer::class)->transform($payload, $connector->fresh());
+            $this->fail('ID turunan yang tidak tersedia harus ditolak.');
+        } catch (DataSyncException $exception) {
+            $this->assertSame('bps_dimension_missing', $exception->errorCode);
+            $this->assertStringContainsString('ID turunan variabel 289', $exception->getMessage());
+            $this->assertStringContainsString('ID tersedia: 1, 2', $exception->getMessage());
+        }
+    }
+
     public function test_admin_review_applies_staging_as_unreviewed_and_resets_publication(): void
     {
         [$admin, $dataset, $variable, $connector] = $this->fixtures();
@@ -134,6 +173,66 @@ class BpsDataSyncTest extends TestCase
             ->assertOk()
             ->assertSee($connector->name)
             ->assertSee($variable->name);
+    }
+
+    public function test_connector_create_explains_why_a_corporate_dataset_is_not_eligible(): void
+    {
+        [$admin, $dataset] = $this->fixtures();
+        $dataset->update(['data_scope' => 'corporate']);
+
+        $this->actingAs($admin, 'admin')
+            ->get(route('admin.automation.connectors.create', ['dataset' => $dataset->id]))
+            ->assertOk()
+            ->assertSee($dataset->title)
+            ->assertSee('Jenis koleksi masih Perusahaan &amp; ESG.', false)
+            ->assertSee('Ubah jenis koleksi');
+    }
+
+    public function test_connector_create_shows_provider_and_active_target_variable(): void
+    {
+        [$admin, $dataset, $variable] = $this->fixtures();
+
+        $this->actingAs($admin, 'admin')
+            ->get(route('admin.automation.connectors.create', ['dataset' => $dataset->id]))
+            ->assertOk()
+            ->assertSee($dataset->provider->name)
+            ->assertSee($variable->name)
+            ->assertSee('Provider tidak dipilih ulang karena otomatis mengikuti koleksi.');
+    }
+
+    public function test_new_connector_rejects_an_inactive_target_variable(): void
+    {
+        [$admin, $dataset] = $this->fixtures();
+        $inactiveVariable = DatasetVariable::create([
+            'dataset_id' => $dataset->id,
+            'code' => 'NONAKTIF',
+            'name' => 'Variabel nonaktif',
+            'unit' => 'Orang',
+            'data_type' => 'numeric',
+            'access_tier' => 'open',
+            'price_per_cell' => 0,
+            'is_active' => false,
+        ]);
+
+        $this->actingAs($admin, 'admin')
+            ->from(route('admin.automation.connectors.create', ['dataset' => $dataset->id]))
+            ->post(route('admin.automation.connectors.store'), [
+                'name' => 'Konektor variabel nonaktif',
+                'dataset_variable_id' => $inactiveVariable->id,
+                'domain' => '0000',
+                'variable_id' => 145,
+                'period_ids' => '115;116',
+                'derived_variable_id' => 0,
+                'vertical_variable_id' => null,
+                'derived_period_id' => 0,
+                'language' => 'ind',
+                'schedule' => 'manual',
+            ])
+            ->assertSessionHasErrors('dataset_variable_id');
+
+        $this->assertDatabaseMissing('data_connectors', [
+            'dataset_variable_id' => $inactiveVariable->id,
+        ]);
     }
 
     public function test_connector_with_history_cannot_be_moved_to_another_variable(): void

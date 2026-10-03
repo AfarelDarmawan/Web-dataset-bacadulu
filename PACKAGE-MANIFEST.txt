@@ -1,0 +1,98 @@
+BacaDulu Dataset v7.6 — ESGI-informed admin workflow, private admin path, BPS Auto Sync, researcher profile photos, and researcher access request UX for Laravel 12
+
+Changes in v7:
+- Workflow-based admin navigation and action-first dashboard.
+- Global cross-dataset variable catalog for corporate/ESG and BPS/government indicators.
+- Unified quality center for sync, extraction, observation, publication, and access queues.
+- Configurable private prefix for all administrator routes.
+- Standalone administrator sign-in layout with no public researcher-login link.
+- Separate `web` and `admin` session guards so public researcher login cannot open or inherit administrator access.
+- Public `/login` and `/register` are researcher-only; administrator login remains at the configurable private path.
+- Guest redirects distinguish private admin routes from researcher routes.
+- Regression coverage for private admin routing and the new workspaces.
+- Smaller, more readable typography and corrected spacing across public, researcher, and admin surfaces.
+- Researcher area is profile-first: `/profile` replaces the visible Dashboard concept, while legacy `/dashboard` redirects safely.
+- Researcher profile uses the public catalogue shell, not the admin-style sidebar/dashboard shell.
+- ESGI-style researcher account page with identity card, edit profile, active data access, request history, tabs, and account dropdown.
+- Local GSAP 3.13 motion with reduced-motion support; no frontend CDN dependency.
+- Cache-busted v7.6 interface assets.
+
+Changes in v6.2:
+- Responsive public footer with company, office, map, contact, catalog, and social information.
+- Optional environment-based WhatsApp contact without empty or broken links.
+- Strict CSP updated only for the embedded Google Maps frame.
+- Admin form partials use form.blade.php without underscore-prefixed filenames.
+- Public CSS and JavaScript cache key updated to v6.2.0.
+
+Hotfix v6.1:
+- Replaces the unsupported relationship query call to orWhereKey() on the connector settings page.
+- Keeps an existing connector target visible when its variable has been deactivated.
+- Adds regression coverage for opening connector settings.
+
+PHP85-PDO-FIX.md: instruksi aman mengganti konstanta PDO MySQL deprecated pada PHP 8.5 tanpa menimpa config/database.php.
+
+Package type: drop-in overlay
+Target project: Web-dataset-bacadulu
+Target database: web_dataset_bacadulu
+
+Included modules:
+- Separate researcher/admin authentication
+- Public variable-first catalog and filters
+- Separate corporate/ESG and BPS/government regional data scopes
+- Variable detail pages with entity, period, source, access, and protected preview context
+- Provider registry
+- Dataset metadata and publication lifecycle
+- Variable dictionary
+- CSV observation import
+- Private source-document registry with SHA-256 duplicate detection
+- Local CSV-to-staging extraction without an API key
+- PDF/XLS/XLSX extraction through OpenAI Responses API when explicitly enabled
+- Strict structured-output normalization and prompt-injection boundary
+- Human review queue with source locator, evidence excerpt, and confidence
+- Per-row edit/accept/reject plus transactional final approval
+- AI output enters observations as unreviewed and can never auto-publish
+- BPS WebAPI connector registry with manual/daily/weekly/monthly schedules
+- Mock BPS mode for end-to-end testing without a token
+- Staged BPS rows with create/update/unchanged comparison and source metadata checksum
+- Human review and transactional application of BPS staging
+- Scheduler command with overlap protection and failure backoff
+- Connector target, nested-route, ambiguous-dimension, and audit-trail safeguards
+- Observation quality-control workflow
+- Observation preview
+- Open CSV export
+- Restricted/commercial access request workflow
+- Admin review and access expiry
+- User management
+- Audit logs
+- Role and object-level access boundaries
+- Security headers and strict Content Security Policy
+- Account/IP-aware rate limiting
+- Encrypted session configuration guidance
+- Hardened CSV import/export
+- File signature checks, private storage, upload limits, and explicit external-processing consent
+- Restricted-value masking and QC publication gate
+- Security-focused feature tests
+- Responsive public, user, and admin interfaces
+- Navy, gold, pale-blue, and white BacaDulu visual system based on the supplied design reference
+- Original BacaDulu logo across public, auth, user, admin, favicon, and error surfaces
+- Clear four-stage admin publishing workflow with plain-language navigation
+- Local GSAP 3.13 motion with reduced-motion support
+- Mobile catalog filter disclosure, removable active filters, scroll progress, and back-to-top control
+- Public/researcher/admin navigation and actions separated by intent
+- Indonesian form guidance, character counters, and clearer dataset workflow
+- AI runtime guard, safe timeout handling, stale-job detection, and recovery action
+- BPS/regional and corporate/ESG CSV examples
+- Non-destructive data_scope migration with regional default for existing records
+- Cache-busted v7 interface assets
+- Explicit admin account synchronization and password reset command for existing databases
+
+Intentionally excluded:
+- .git
+- .env
+- vendor
+- node_modules
+- demo providers
+- demo datasets
+- payment gateway
+- external institutional API credentials
+- OpenAI API keys or source documents
